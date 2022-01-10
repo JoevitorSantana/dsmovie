@@ -1,7 +1,7 @@
 import './styles.css'
 import {ReactComponent as GithubIcon} from 'assets/img/github.svg'
 
-export function NavBar(){
+export function Navbar(){
     return(
         <header>
             <nav className="container">
