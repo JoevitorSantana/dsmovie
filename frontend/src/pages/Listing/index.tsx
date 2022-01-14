@@ -9,35 +9,39 @@ export function Listing(){
 
     const [numberPage, setNumberPage] = useState(0);
 
+    const [page, setPage] = useState<MoviePage>({
+        content: [],
+        last: true,
+        totalPages: 0,
+        totalElements: 0,
+        size: 12,
+        number: 0,
+        first: true,
+        numberOfElements: 0,
+        empty: true,
+    });
+
     useEffect(() => {
-        axios.get(`${BASE_URL}/movies?size=12&page=2`).then(response =>{
-            const data = response.data as MoviePage;
-            console.log(data)
-            setNumberPage(data.number);
+        axios.get(`${BASE_URL}/movies?size=12&page=${numberPage}`).then(response =>{
+            const data = response.data as MoviePage;  
+            setPage(data);          
         })
-    }, []);    
+    }, [numberPage]);    
 
     return(
         <>
             
-            <Pagination />
-            <h1>{numberPage}</h1>
+            <Pagination />            
             <div className="container">
+                
                 <div className="row">
-                    <div className="col-sm-6 col-lg-4 col-xl-3 mb-3">
-                        <MovieCard />  
+                {page.content.map(movie => (
+                    <div key={movie.id}className="col-sm-6 col-lg-4 col-xl-3 mb-3">
+                        <MovieCard movie={movie}/>                      
                     </div>
-                    <div className="col-sm-6 col-lg-4 col-xl-3 mb-3">
-                        <MovieCard />  
-                    </div>
-                    <div className="col-sm-6 col-lg-4 col-xl-3 mb-3">
-                        <MovieCard />  
-                    </div>
-                    <div className="col-sm-6 col-lg-4 col-xl-3 mb-3">
-                        <MovieCard />  
-                    </div>
-                </div>                  
-            </div>                                
+                ))};                                     
+                </div>                                
+            </div>
         </>
     );
 }
