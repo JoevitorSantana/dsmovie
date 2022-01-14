@@ -28,10 +28,13 @@ export function Listing(){
         })
     }, [numberPage]);    
 
+    const handlePageChange = (newNumber: number) => {
+        setNumberPage(newNumber);
+    }
+
     return(
-        <>
-            
-            <Pagination />            
+        <>            
+            <Pagination page={page} onChange={handlePageChange}/>            
             <div className="container">
                 
                 <div className="row">
